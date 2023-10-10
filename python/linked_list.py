@@ -20,6 +20,22 @@ class LinkedList:
             else:
                 node.next_pointer = new_node
 
+    def update(self, index, value):
+        if index == 0:
+            self.head.value = value
+        else:
+            counter = 0
+            node = self.head
+            while counter < index:
+                if node.next_pointer is None:
+                    node.next_pointer = Node(value)
+                    break
+                else:
+                    node = node.next_pointer
+                    counter += 1
+            else:
+                node.value = value
+
     def delete_by_index(self, index):
         counter = 0
         node = self.head
@@ -44,22 +60,6 @@ class LinkedList:
             else:
                 node = node.next_pointer
 
-    def update(self, index, value):
-        if index == 0:
-            self.head.value = value
-        else:
-            counter = 0
-            node = self.head
-            while counter < index:
-                if node.next_pointer is None:
-                    node.next_pointer = Node(value)
-                    break
-                else:
-                    node = node.next_pointer
-                    counter += 1
-            else:
-                node.value = value
-
     def display(self):
         node = self.head
         while node:
@@ -68,9 +68,8 @@ class LinkedList:
         else:
             print()
 
-
     def delete_all_duplicates(self):
-        new_list = []
+        new_list = LinkedList()
         current_node = self.head
         next_node = self.head
         flag = True
@@ -81,13 +80,17 @@ class LinkedList:
                 flag = False
                 while next_node.value != current_node.value:
                     next_node = next_node.next_pointer
+                else:
+                    if next_node.next_pointer is not None and next_node.value == next_node.next_pointer.value:
+                        while next_node.value != current_node.value:
+                            next_node = next_node.next_pointer
             else:
                 if flag:
                     new_list.append(current_node.value)
                 current_node = next_node
                 flag = True
         else:
-            print(new_list)
+            self.head = new_list.head
 
 
 if __name__ == "__main__":
