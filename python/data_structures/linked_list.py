@@ -80,10 +80,6 @@ class LinkedList:
                 flag = False
                 while next_node.value != current_node.value:
                     next_node = next_node.next_pointer
-                else:
-                    if next_node.next_pointer is not None and next_node.value == next_node.next_pointer.value:
-                        while next_node.value != current_node.value:
-                            next_node = next_node.next_pointer
             else:
                 if flag:
                     new_list.append(current_node.value)
@@ -102,7 +98,10 @@ if __name__ == "__main__":
     linked_list.append(3)
     linked_list.append(3)
     linked_list.append(4)
+    linked_list.append(4)
     linked_list.append(5)
+    linked_list.append(5)
+    # linked_list.append(6)
     linked_list.display()
     linked_list.delete_all_duplicates()
     linked_list.display()
