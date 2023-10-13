@@ -1,27 +1,26 @@
 class Queue:
     def __init__(self):
-        self.queue = []
+        self.__stack = []
 
     def enqueue(self, value):
-        self.queue.append(value)
+        self.__stack.append(value)
 
     def dequeue(self):
         try:
-            return self.queue.pop()
+            temp = self.__stack[0]
+            del self.__stack[0]
+            return temp
         except IndexError as IE:
-            print("Queue is empty. Can't dequeue!!")
-
-    def peep(self):
-        return self.queue[-1]
+            print('Queue is empty. Can\'t dequeue further')
 
     def display(self):
-        for values in self.queue:
-            print(values, end=' ')
+        for value in self.__stack:
+            print(value, end=' ')
         else:
             print()
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     queue = Queue()
     queue.enqueue(1)
     queue.enqueue(2)
@@ -33,5 +32,6 @@ if __name__=='__main__':
     queue.dequeue()
     queue.dequeue()
     queue.dequeue()
-    queue.dequeue()
     queue.display()
+
+
