@@ -5,7 +5,7 @@ class Node:
         self.prev_pointer = prev_pointer
 
 
-class ReversedLinkedList:
+class DoublyLinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
