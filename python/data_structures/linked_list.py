@@ -1,3 +1,6 @@
+from hmac import new
+
+
 class Node:
     def __init__(self, value, next_pointer=None):
         self.value = value
@@ -5,7 +8,7 @@ class Node:
 
 
 class LinkedList:
-
+    # can add variable to count number of nodes
     def __init__(self):
         self.head = None
         self.tail = None
@@ -18,6 +21,11 @@ class LinkedList:
         else:
             self.tail.next_pointer = new_node
             self.tail = new_node
+            
+    def prepend(self, value):
+        new_node = Node(value)
+        new_node.next_pointer = self.head
+        self.head = new_node
 
     def update(self, index, value):
         if index == 0:
