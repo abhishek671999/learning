@@ -1,0 +1,49 @@
+Cimpress interview questions
+
+Consider a scenario where you are working for a retail company, and you have been given the task to analyze the sales performance of different products based on their sales quantities and 
+total revenue generated. Write a SQL query that utilizes window functions, specifically `RANK()` and `SUM() OVER()`, to rank products based on their sales quantities and 
+calculate the cumulative revenue for each product. The resulting output should display the product name, sales quantity rank, total sales quantity, and cumulative revenue.
+**Data Schema:**
+Assume you have two tables:
+1. `products`: Contains product information.
+   - Columns: `product_id`, `product_name`
+2. `sales`: Contains sales data for each product.
+   - Columns: `product_id`, `sales_quantity`, `sales_date`, `unit_price`
+
+
+-- inputs
+
+product_id,product_name
+101,Smart Phone
+102,Laptop
+103,Computer
+
+
+product_id,sales_quantity,unit_price,sales_date
+101,10,25,2024-01-01
+102,5,100,2024-01-02
+101,20,25,2024-01-03
+103,15,50,2024-01-04
+
+
+ -- output
+product_name,sales_quantity_rank,total_quantity,cumulative_revenue
+Smart Phone,1,30,750
+Computer,2,15,1500
+Laptop,3,5,2000
+
+with sales_stg as (
+   select *, (sales_quantity * unit_price) as total_sale_value
+   from sales
+),
+with sales_agg as (
+   select product_id, sum(sales_quantity) as total_quantity, sum(total_sale_value) as cumulative_revenue
+   from sales_stg
+   group by product_id
+),
+with sales_report as (
+   select *, RANK(total_quantity) OVER (ORDER BY total_quantity DESC) as sales_quantity_rank
+   from sales_agg s_agg
+   join products prdt on s_agg.product_id = prdt.product_id
+)
+select product_name,sales_quantity_rank,total_quantity,cumulative_revenue FROM sales_report order by sales_quantity_rank
