@@ -1,0 +1,73 @@
+1) Design a SQL query to identify customers who have made purchases in three consecutive months but then stopped for at least two months, using a sample sales table.
+
+sales_table
+user_id, order_date
+
+with cte as (
+    select 
+        user_id,
+        MONTH(order_date) as order_month,
+    from sales_table
+    group by user_id, MONTH(order_date)
+),
+with cte2 as (
+    select
+        *
+        LAG(order_month, 1) over(partiton by user_id) as perivous_month,
+        LAG(order_month, 2) over(partiton by user_id) as perivous_month_2,
+    from cte
+),
+with cte3 as (
+    select 
+        *,
+        case
+            when order_month - 1 =  perivous_month AND order_month - 2 =  perivous_month_2 then 'YES'
+            ELSE 'NO' 
+        END as result
+    from cte2
+)
+select user_id from cte3 where result = 'YES'
+
+2) Can you explain the core architecture of Snowflake and how it differs from traditional data warehouses
+
+3) What are the key differences between Matillion and DBT for data transformation, and when would you choose one over the other?
+4) Propose a data modeling strategy for a new e-commerce analytics platform in Snowflake, considering scalability, performance, and ease of reporting. Justify your choices
+
+
+orders_table - fact
+user_table - dim
+item_table - dim 
+
+SCD - 0 non change
+SCD 1 - UDPATE - SAME ROW
+SCD 2 - APPEND NEW ROW EVERY TIME THERE IS change - ROW
+SCD 3 - PREVIOUS CHANGE - COLUMNS
+
+5) What is CI/CD and why is it important in a data engineering environment?
+
+6) You are implementing a new data pipeline. How would you integrate automated testing and deployment using CI/CD practices to ensure data quality and reliability?
+DBT - inbuilt functionalities that we can write test case
+python script - unit test case, github action
+
+7) Given a business requirement to visualize sales performance across different regions and product categories, design a wireframe for a dashboard using your preferred 
+visualization tool. Explain your design choices.
+
+wireframe layout?
+
+8) What are the key considerations when designing a dashboard in Tableau/Power BI for a non-technical audience
+ Trends
+ YoY check
+ Monthlty/yerly average
+ Top selling
+ Top purchasing city
+ Top seliing categroy
+ Worst selling
+ worst selling categroy
+
+9) You are tasked with creating a highly interactive and performant dashboard for executive leadership using Power BI. Design the dashboard, 
+considering data volume, refresh rates, and user experience. How would you ensure optimal performance?
+adding few filters city, category, warehouses,
+delay in shipments.
+few other chart. Bar graph, line graph,
+refresh rates - batch if not Streaming pipeline - real time dashboard
+user experience - high availability, accuracy, no lags 

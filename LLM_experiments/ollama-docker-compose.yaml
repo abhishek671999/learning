@@ -1,0 +1,14 @@
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama_container
+    ports:
+    - 11434:11434
+    volumes:
+    - ollama:/root/.ollama
+    dns:
+    - 8.8.8.8
+    - 1.1.1.1
+
+volumes:
+  ollama:

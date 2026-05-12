@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ubuntu:
+    image: ubuntu:latest
+    container_name: ubuntu_container
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+    restart: unless-stopped
+#     volumes:
+#       # Persists the library files you mentioned
+#       - ollama_lib:/usr/local/lib/ollama
+#       - ollama_bin:/usr/local/bin
+#       # Persists your actual AI models (The most important part)
+#       - ./ollama_data:/root/.ollama 
+#     ports:
+#       - "11434:11434"
+
+# volumes:
+#   ollama_lib:
+#   ollama_bin:
