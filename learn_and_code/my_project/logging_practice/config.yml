@@ -1,0 +1,5 @@
+node:
+    name: node_1
+    IP: '127.0.0.1'
+    port: 20222
+    exec_timeout: 10 # seconds

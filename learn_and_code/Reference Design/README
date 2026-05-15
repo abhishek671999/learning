@@ -1,0 +1,5 @@
+*UML diagrams created in Visual paradigm
+
+* Note that every property should have by default a getter defined. For example if you have a property called connection then there should be a method as follows
+getConnection()
+

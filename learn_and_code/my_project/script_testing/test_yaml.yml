@@ -1,0 +1,5 @@
+service: 3
+arr_1:
+    dict:
+        - 2
+        - 3
